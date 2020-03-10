@@ -1,15 +1,29 @@
 import React, { Component } from "react";
 import ContactList from "../ContactList/ContactList";
 import ContactForm from "../ContactForm/ContactForm";
+import ThemeContext from "../context/themeContext";
+import { themeConfig } from "../context/themeContext";
 import Filter from "../Filter/Filter";
+import Header from "../Header/Header";
 import styles from "./App.module.css";
 import { uuid } from "uuidv4";
 
 export default class App extends Component {
-  state = {
-    contacts: [],
-    filter: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      contacts: [],
+      filter: "",
+      theme: "light"
+    };
+    this.toggleTheme = this.toggleTheme.bind(this);
+  }
+
+  toggleTheme(newTheme) {
+    this.setState({
+      theme: this.state.theme === "dark" ? "light" : "dark"
+    });
+  }
   componentDidMount() {
     const persistedContacts = localStorage.getItem("contacts");
     console.log(persistedContacts);
@@ -62,20 +76,21 @@ export default class App extends Component {
     const { contacts, filter } = this.state;
     const visibleContacts = this.getFiltredContacts();
     return (
-      <section className={styles.section}>
-        <h1 className={styles.title}>Phonebook</h1>
-        {ContactForm && <ContactForm onAddContact={this.addContact} />}
-        <h2 className={styles.title}>Contacts</h2>
-        {contacts.length > 1 && (
-          <Filter value={filter} onChangeFilter={this.changeFilter} />
-        )}
-        {visibleContacts.length > 0 && (
-          <ContactList
-            contacts={visibleContacts}
-            onRemove={this.removeContact}
-          />
-        )}
-      </section>
+      <ThemeContext.Provider value={themeConfig[this.state.theme]}>
+        <section className={styles.section}>
+          {this.state.theme && <Header onToggleTheme={this.toggleTheme} />}
+          {ContactForm && <ContactForm onAddContact={this.addContact} />}
+          {contacts.length > 1 && (
+            <Filter value={filter} onChangeFilter={this.changeFilter} />
+          )}
+          {visibleContacts.length > 0 && (
+            <ContactList
+              contacts={visibleContacts}
+              onRemove={this.removeContact}
+            />
+          )}
+        </section>
+      </ThemeContext.Provider>
     );
   }
 }
