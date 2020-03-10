@@ -1,0 +1,9 @@
+.title {
+  font-family: "Sriracha", cursive;
+}
+.section {
+  width: 400px;
+  border: 1px solid #555252;
+  margin: 0 auto;
+  text-align: center;
+}
