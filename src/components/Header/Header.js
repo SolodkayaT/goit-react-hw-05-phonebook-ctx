@@ -10,7 +10,7 @@ const Header = ({ onToggleTheme }) => {
         <input
           type="checkbox"
           checked={styles.checked}
-          onChange={e => onToggleTheme(e.currentTarget.value)}
+          onChange={e => onToggleTheme(e.target.value)}
         />
         <span className={styles.slider}></span>
       </label>
