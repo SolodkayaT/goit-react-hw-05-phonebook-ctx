@@ -19,6 +19,6 @@ ContactListItem.defaultProps = {
 };
 
 ContactListItem.propTypes = {
-  contacts: PropTypes.object,
+  contact: PropTypes.object,
   keys: PropTypes.string
 };

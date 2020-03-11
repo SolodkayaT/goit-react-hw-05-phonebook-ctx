@@ -15,8 +15,7 @@ export default function ContactListButton({ contact, onRemoveContact }) {
 }
 
 ContactListButton.defaultProps = {
-  contact: {},
-  onRemoveContact: () => {}
+  contact: {}
 };
 
 ContactListButton.propTypes = {

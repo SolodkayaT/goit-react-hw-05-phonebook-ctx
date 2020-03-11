@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ContactList from "../ContactList/ContactList";
 import ContactForm from "../ContactForm/ContactForm";
+import Layout from "../Layout/Layout";
 import ThemeContext from "../context/themeContext";
 import { themeConfig } from "../context/themeContext";
 import Filter from "../Filter/Filter";
 import Header from "../Header/Header";
-import styles from "./App.module.css";
 import { uuid } from "uuidv4";
 
 export default class App extends Component {
@@ -77,8 +77,10 @@ export default class App extends Component {
     const visibleContacts = this.getFiltredContacts();
     return (
       <ThemeContext.Provider value={themeConfig[this.state.theme]}>
-        <section className={styles.section}>
-          {this.state.theme && <Header onToggleTheme={this.toggleTheme} />}
+        <Layout>
+          {this.state.theme && (
+            <Header onToggleTheme={e => this.toggleTheme(e)} />
+          )}
           {ContactForm && <ContactForm onAddContact={this.addContact} />}
           {contacts.length > 1 && (
             <Filter value={filter} onChangeFilter={this.changeFilter} />
@@ -89,7 +91,7 @@ export default class App extends Component {
               onRemove={this.removeContact}
             />
           )}
-        </section>
+        </Layout>
       </ThemeContext.Provider>
     );
   }
