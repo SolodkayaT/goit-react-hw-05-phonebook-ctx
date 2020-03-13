@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import ContactList from "../ContactList/ContactList";
 import ContactForm from "../ContactForm/ContactForm";
-import Header from "../Header/Header";
-import ThemeContext from "../context/themeContext";
 import Filter from "../Filter/Filter";
 import { uuid } from "uuidv4";
-import withTheme from "../hoc/withTheme";
-import styles from "./App.module.css";
+import Layout from "../Layout/Layout";
 
 class App extends Component {
   state = {
@@ -67,30 +64,20 @@ class App extends Component {
     const visibleContacts = this.getFiltredContacts();
     return (
       <>
-        <ThemeContext.Consumer>
-          {theme => (
-            <div
-              className={styles.body}
-              style={{ color: theme.fontColor, background: theme.bodyBg }}
-            >
-              {this.props.toggle && (
-                <Header onToggleTheme={e => this.props.toggle(e)} />
-              )}
-              {ContactForm && <ContactForm onAddContact={this.addContact} />}
-              {contacts.length > 1 && (
-                <Filter value={filter} onChangeFilter={this.changeFilter} />
-              )}
-              {visibleContacts.length > 0 && (
-                <ContactList
-                  contacts={visibleContacts}
-                  onRemove={this.removeContact}
-                />
-              )}
-            </div>
+        <Layout>
+          {ContactForm && <ContactForm onAddContact={this.addContact} />}
+          {contacts.length > 1 && (
+            <Filter value={filter} onChangeFilter={this.changeFilter} />
           )}
-        </ThemeContext.Consumer>
+          {visibleContacts.length > 0 && (
+            <ContactList
+              contacts={visibleContacts}
+              onRemove={this.removeContact}
+            />
+          )}
+        </Layout>
       </>
     );
   }
 }
-export default withTheme(App);
+export default App;
